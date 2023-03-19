@@ -129,9 +129,11 @@
   <ItemGroup>
     <ClInclude Include="BinarySearchTree.h" />
     <ClInclude Include="BstTester.h" />
-    <ClInclude Include="OverflowDetector.h" />
+    <ClInclude Include="ObjectFreeList.h" />
+    <ClInclude Include="MemoryAllocator.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="MemoryAllocator.cpp" />
     <ClCompile Include="Test.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

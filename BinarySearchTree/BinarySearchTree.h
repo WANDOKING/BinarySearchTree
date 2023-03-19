@@ -1,6 +1,6 @@
 #pragma once
 
-#include "OverflowDetector.h"
+#include "ObjectFreeList.h"
 
 template <typename T>
 class BinarySearchTree
@@ -41,7 +41,7 @@ public:
 
 		if (mRoot == nullptr)
 		{
-			Node<T>* newNode = new Node<T>;
+			Node<T>* newNode = (Node<T>*)MEMORY_ALLOC(sizeof(Node<T>));
 			newNode->Data = data;
 			newNode->Left = nullptr;
 			newNode->Right = nullptr;
@@ -109,7 +109,11 @@ public:
 	std::string GetInorderString() const
 	{
 		std::string result = "";
-		getInorderStringRecursive(mRoot, result);
+
+		if (mRoot != nullptr)
+		{
+			getInorderStringRecursive(mRoot, result);
+		}
 
 		return result;
 	}
@@ -142,18 +146,17 @@ private:
 		{
 			return false;
 		}
-		else if (data < root->Data)
+
+		if (data < root->Data)
 		{
 			if (root->Left == nullptr)
 			{
-				Node<T>* newNode = (Node<T>*)Malloc_OverflowCheck(sizeof(Node<T>));
+				Node<T>* newNode = (Node<T>*)MEMORY_ALLOC(sizeof(Node<T>));
 				newNode->Data = data;
 				newNode->Left = nullptr;
 				newNode->Right = nullptr;
 
 				root->Left = newNode;
-
-				return true;
 			}
 			else
 			{
@@ -164,20 +167,20 @@ private:
 		{
 			if (root->Right == nullptr)
 			{
-				Node<T>* newNode = (Node<T>*)Malloc_OverflowCheck(sizeof(Node<T>));
+				Node<T>* newNode = (Node<T>*)MEMORY_ALLOC(sizeof(Node<T>));
 				newNode->Data = data;
 				newNode->Left = nullptr;
 				newNode->Right = nullptr;
 
 				root->Right = newNode;
-
-				return true;
 			}
 			else
 			{
 				return insertRecursive(data, root->Right);
 			}
 		}
+
+		return true;
 	}
 
 	bool isContainRecursive(T data, const Node<T>* rootOrNull) const
@@ -290,7 +293,7 @@ private:
 			ret = node->Right;
 		}
 
-		Free_OverflowCheck(toDelete);
+		MEMORY_FREE(toDelete);
 
 		return ret;
 	}
@@ -326,7 +329,7 @@ private:
 			clearRecursive(root->Right);
 		}
 
-		Free_OverflowCheck(root);
+		MEMORY_FREE(root);
 	}
 private:
 	Node<T>* mRoot = nullptr;
