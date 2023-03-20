@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ObjectFreeList.h"
+#include <cassert>
 
 template <typename T>
 class BinarySearchTree
@@ -25,10 +26,7 @@ public:
 		}
 	}
 
-	inline int GetSize() const
-	{
-		return mSize;
-	}
+	inline int GetSize() const { return mSize; }
 
 	bool IsContain(T data) const
 	{

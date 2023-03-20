@@ -131,6 +131,7 @@
     <ClInclude Include="BstTester.h" />
     <ClInclude Include="ObjectFreeList.h" />
     <ClInclude Include="MemoryAllocator.h" />
+    <ClInclude Include="RedBlackTree.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MemoryAllocator.cpp" />
