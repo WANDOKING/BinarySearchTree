@@ -1,3 +1,4 @@
+// version 1.0.0
 #pragma once
 
 #include "ObjectFreeList.h"
@@ -10,9 +11,9 @@ private:
 	template <typename T>
 	struct Node
 	{
-		T Data{};
-		Node<T>* Left = nullptr;
-		Node<T>* Right = nullptr;
+		T			Data{};
+		Node<T>*	Left = nullptr;
+		Node<T>*	Right = nullptr;
 	};
 
 public:
@@ -26,14 +27,14 @@ public:
 		}
 	}
 
-	inline int GetSize() const { return mSize; }
+	inline int	GetSize() const { return mSize; }
 
-	bool IsContain(T data) const
+	bool		IsContain(T data) const
 	{
 		return isContainRecursive(data, mRoot);
 	}
 
-	bool Insert(T data)
+	bool		Insert(T data)
 	{
 		bool ret;
 
@@ -61,7 +62,7 @@ public:
 		return ret;
 	}
 
-	bool Delete(T data)
+	bool		Delete(T data)
 	{
 		if (mRoot == nullptr)
 		{
@@ -117,7 +118,7 @@ public:
 	}
 
 private:
-	void getInorderStringRecursive(const Node<T>* root, std::string& result) const
+	void		getInorderStringRecursive(const Node<T>* root, std::string& result) const
 	{
 		assert(root != nullptr);
 
@@ -136,7 +137,7 @@ private:
 		}
 	}
 
-	bool insertRecursive(T data, Node<T>* root)
+	bool		insertRecursive(T data, Node<T>* root)
 	{
 		assert(root != nullptr);
 
@@ -181,7 +182,7 @@ private:
 		return true;
 	}
 
-	bool isContainRecursive(T data, const Node<T>* rootOrNull) const
+	bool		isContainRecursive(T data, const Node<T>* rootOrNull) const
 	{
 		if (rootOrNull == nullptr)
 		{
@@ -201,7 +202,7 @@ private:
 		}
 	}
 
-	bool deleteRecursive(T data, Node<T>* root)
+	bool		deleteRecursive(T data, Node<T>* root)
 	{
 		assert(data != root->Data);
 
@@ -272,7 +273,7 @@ private:
 	}
 
 	// 자식이 하나 이하인 노드 삭제, null 또는 그 위치의 새로운 노드 주소를 반환
-	Node<T>* deleteNodeWithLessThanOneChild(Node<T>* node)
+	Node<T>*	deleteNodeWithLessThanOneChild(Node<T>* node)
 	{
 		assert(node != nullptr);
 
@@ -297,7 +298,7 @@ private:
 	}
 
 	// 루트 노드가 최댓값이 아닌 트리에 대해 최댓값 노드를 삭제하고 그 값을 반환
-	T deleteMaxNodeRecursive(Node<T>* rootRightIsNotNull)
+	T			deleteMaxNodeRecursive(Node<T>* rootRightIsNotNull)
 	{
 		assert(rootRightIsNotNull != nullptr);
 		assert(rootRightIsNotNull->Right != nullptr);
@@ -313,7 +314,7 @@ private:
 	}
 
 	// 모든 노드 삭제 (후위 순회)
-	void clearRecursive(Node<T>* root)
+	void		clearRecursive(Node<T>* root)
 	{
 		assert(root != nullptr);
 
@@ -330,6 +331,6 @@ private:
 		MEMORY_FREE(root);
 	}
 private:
-	Node<T>* mRoot = nullptr;
-	int mSize = 0;
+	Node<T>*	mRoot = nullptr;
+	int			mSize = 0;
 };

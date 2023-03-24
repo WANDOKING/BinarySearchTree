@@ -7,6 +7,11 @@ template <typename T>
 class BstTester
 {
 public:
+	virtual ~BstTester()
+	{
+
+	}
+
 	virtual int GetSize() const = 0;
 	virtual bool IsContain(T data) const = 0;
 	virtual bool Insert(T data) = 0;
@@ -18,6 +23,11 @@ template <typename T>
 class SetTester : public BstTester<T>
 {
 public:
+	~SetTester() override
+	{
+
+	}
+
 	int GetSize() const override
 	{
 		return (int)mSet.size();

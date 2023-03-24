@@ -9,15 +9,17 @@
 
 enum EOperation
 {
-	Delete = 0,
-	IsContain = 1,
-	// Insert
+	Delete,
+	IsContain,
+	// ~ Insert
 };
 
 int main(void)
 {
+	// RedBlackTree
+	if (true)
 	{
-		srand(1024);
+		srand(2468);
 
 		RedBlackTree<int>* bst = new RedBlackTree<int>();
 		BstTester<int>* tester = new SetTester<int>();
@@ -34,7 +36,14 @@ int main(void)
 			int randomNumber = rand();
 
 			std::string strOperation;
-			if (operation == EOperation::IsContain)
+			if (operation == EOperation::Delete)
+			{
+				// Delete()
+				retBst = bst->Delete(randomNumber);
+				retTester = tester->Delete(randomNumber);
+				strOperation = "Delete()";
+			}
+			else if (operation == EOperation::IsContain)
 			{
 				// IsContain()
 				retBst = bst->IsContain(randomNumber);
@@ -57,17 +66,30 @@ int main(void)
 			int testerSize = tester->GetSize();
 			assert(bstSize == testerSize);
 
-			// 3. 중위 순회 결과 비교
+			// 3. 레드-블랙 트리 조건 체크
+			assert(bst->IsValidTree());
+
+			// 4. 최소 깊이, 최대 깊이 확인
+			int minDepth = bst->GetMinDepth();
+			int maxDepth = bst->GetMaxDepth();
+			assert(minDepth * 2 >= maxDepth);
+
+			// 5. 중위 순회 결과 비교
 			std::string strTester = tester->GetInorderString();
 			std::string strBst = bst->GetInorderString();
 			assert(strTester == strBst);
 
 			// 로그
-			printf("testCount = %10lld | op = %15s | number = %12d | Size = %10d\n", testCount, strOperation.c_str(), randomNumber, bst->GetSize());
+			printf("Test = %10lld | OP = %14s | num = %8d | | Size = %8d | BlackDepth = %6d | minDepth = %6d | maxDepth = %6d\n", 
+				testCount, strOperation.c_str(), randomNumber, bst->GetSize(), bst->GetBlackDepth(), minDepth, maxDepth);
 		}
+
+		delete bst;
+		delete tester;
 	}
 
-
+	// BinarySearchTree
+	if (false)
 	{
 		srand(9642);
 
