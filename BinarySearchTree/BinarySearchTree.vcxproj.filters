@@ -9,9 +9,8 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="Libraries">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="Profiler">
+      <UniqueIdentifier>{71f2a8ad-61c1-42e3-ad3c-f748dfc42ce2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -21,22 +20,24 @@
     <ClInclude Include="BstTester.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="ObjectFreeList.h">
-      <Filter>Libraries</Filter>
-    </ClInclude>
-    <ClInclude Include="MemoryAllocator.h">
-      <Filter>Libraries</Filter>
-    </ClInclude>
     <ClInclude Include="RedBlackTree.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Profiler.h">
+      <Filter>Profiler</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Test.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="MemoryAllocator.cpp">
-      <Filter>Libraries</Filter>
+    <ClCompile Include="Profiler.cpp">
+      <Filter>Profiler</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="프로파일링_결과.txt">
+      <Filter>Profiler</Filter>
+    </Text>
   </ItemGroup>
 </Project>

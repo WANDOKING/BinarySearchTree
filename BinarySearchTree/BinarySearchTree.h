@@ -1,19 +1,16 @@
 // version 1.0.0
 #pragma once
 
-#include "ObjectFreeList.h"
 #include <cassert>
 
 template <typename T>
-class BinarySearchTree
+class BinarySearchTree final
 {
-private:
-	template <typename T>
 	struct Node
 	{
-		T			Data{};
-		Node<T>*	Left = nullptr;
-		Node<T>*	Right = nullptr;
+		T		Data{};
+		Node*	Left = nullptr;
+		Node*	Right = nullptr;
 	};
 
 public:
@@ -29,10 +26,7 @@ public:
 
 	inline int	GetSize() const { return mSize; }
 
-	bool		IsContain(T data) const
-	{
-		return isContainRecursive(data, mRoot);
-	}
+	inline bool	IsContain(T data) const { return isContainRecursive(data, mRoot); }
 
 	bool		Insert(T data)
 	{
@@ -40,7 +34,7 @@ public:
 
 		if (mRoot == nullptr)
 		{
-			Node<T>* newNode = (Node<T>*)MEMORY_ALLOC(sizeof(Node<T>));
+			Node* newNode = new Node;
 			newNode->Data = data;
 			newNode->Left = nullptr;
 			newNode->Right = nullptr;
@@ -105,39 +99,9 @@ public:
 		return ret;
 	}
 
-	std::string GetInorderString() const
-	{
-		std::string result = "";
-
-		if (mRoot != nullptr)
-		{
-			getInorderStringRecursive(mRoot, result);
-		}
-
-		return result;
-	}
-
 private:
-	void		getInorderStringRecursive(const Node<T>* root, std::string& result) const
-	{
-		assert(root != nullptr);
 
-		if (root->Left != nullptr)
-		{
-			getInorderStringRecursive(root->Left, result);
-		}
-
-		result += "[";
-		result += std::to_string(root->Data);
-		result += "] ";
-
-		if (root->Right != nullptr)
-		{
-			getInorderStringRecursive(root->Right, result);
-		}
-	}
-
-	bool		insertRecursive(T data, Node<T>* root)
+	bool	insertRecursive(T data, Node* const root)
 	{
 		assert(root != nullptr);
 
@@ -150,7 +114,7 @@ private:
 		{
 			if (root->Left == nullptr)
 			{
-				Node<T>* newNode = (Node<T>*)MEMORY_ALLOC(sizeof(Node<T>));
+				Node* newNode = new Node;
 				newNode->Data = data;
 				newNode->Left = nullptr;
 				newNode->Right = nullptr;
@@ -166,7 +130,7 @@ private:
 		{
 			if (root->Right == nullptr)
 			{
-				Node<T>* newNode = (Node<T>*)MEMORY_ALLOC(sizeof(Node<T>));
+				Node* newNode = new Node;
 				newNode->Data = data;
 				newNode->Left = nullptr;
 				newNode->Right = nullptr;
@@ -182,7 +146,7 @@ private:
 		return true;
 	}
 
-	bool		isContainRecursive(T data, const Node<T>* rootOrNull) const
+	bool	isContainRecursive(T data, const Node* const rootOrNull) const
 	{
 		if (rootOrNull == nullptr)
 		{
@@ -202,7 +166,7 @@ private:
 		}
 	}
 
-	bool		deleteRecursive(T data, Node<T>* root)
+	bool	deleteRecursive(T data, Node* const root)
 	{
 		assert(data != root->Data);
 
@@ -273,12 +237,12 @@ private:
 	}
 
 	// 자식이 하나 이하인 노드 삭제, null 또는 그 위치의 새로운 노드 주소를 반환
-	Node<T>*	deleteNodeWithLessThanOneChild(Node<T>* node)
+	Node*	deleteNodeWithLessThanOneChild(Node* const node)
 	{
 		assert(node != nullptr);
 
-		Node<T>* toDelete = node;
-		Node<T>* ret;
+		Node* toDelete = node;
+		Node* ret;
 		if (node->Left == nullptr && node->Right == nullptr)
 		{
 			ret = nullptr;
@@ -292,13 +256,14 @@ private:
 			ret = node->Right;
 		}
 
-		MEMORY_FREE(toDelete);
+
+		delete toDelete;
 
 		return ret;
 	}
 
 	// 루트 노드가 최댓값이 아닌 트리에 대해 최댓값 노드를 삭제하고 그 값을 반환
-	T			deleteMaxNodeRecursive(Node<T>* rootRightIsNotNull)
+	T		deleteMaxNodeRecursive(Node* const rootRightIsNotNull)
 	{
 		assert(rootRightIsNotNull != nullptr);
 		assert(rootRightIsNotNull->Right != nullptr);
@@ -314,7 +279,7 @@ private:
 	}
 
 	// 모든 노드 삭제 (후위 순회)
-	void		clearRecursive(Node<T>* root)
+	void	clearRecursive(Node* const root)
 	{
 		assert(root != nullptr);
 
@@ -328,9 +293,44 @@ private:
 			clearRecursive(root->Right);
 		}
 
-		MEMORY_FREE(root);
+		delete root;
+	}
+
+#pragma region BST 검증용 함수들
+public:
+	std::string GetInorderString() const
+	{
+		std::string result = "";
+
+		if (mRoot != nullptr)
+		{
+			getInorderStringRecursive(mRoot, result);
+		}
+
+		return result;
 	}
 private:
-	Node<T>*	mRoot = nullptr;
-	int			mSize = 0;
+	void		getInorderStringRecursive(const Node* root, std::string& result) const
+	{
+		assert(root != nullptr);
+
+		if (root->Left != nullptr)
+		{
+			getInorderStringRecursive(root->Left, result);
+		}
+
+		result += "[";
+		result += std::to_string(root->Data);
+		result += "] ";
+
+		if (root->Right != nullptr)
+		{
+			getInorderStringRecursive(root->Right, result);
+		}
+	}
+#pragma endregion
+
+private:
+	Node*	mRoot = nullptr;
+	int		mSize = 0;
 };
